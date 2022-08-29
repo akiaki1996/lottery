@@ -5,7 +5,7 @@ import openpyxl
 is_run = False
 
 def getPeopleList():
-    workbook = openpyxl.load_workbook("./uids.csv", data_only=True)
+    workbook = openpyxl.load_workbook("./uids.xlsx", data_only=True)
     list = []
     sheet = workbook[workbook.sheetnames[0]]
     for row in range(2, sheet.max_row+1):
@@ -21,7 +21,8 @@ def randomRun(list):
     if is_run:
         return
     is_run = True
-    num = insert_point()
+    #num = insert_point()
+    num = 2
     if num:
         num = int(num)
         randomResult(list,num)
@@ -30,47 +31,47 @@ def randomRun(list):
     
 
 
-    def insert_point():
-        var = input.get()
-        return var
-    
-
-    def randomResult(list, num):
-        global is_run
-        result = random.sample(list, num)
-        var.set(result)
-        if is_run:
-            window.after(100, randomResult,list, num)
-
-    def finalResult():
-        global is_run
-        is_run = False
-    
-
-    if __name__ == '__main__':
-        window = Tk()
-        window.getmetry('500x290+250+150')
-        window.resizable(0, 0)
-        window.title('陈琳问卷调查抽奖0829')
-        list = getPeopleList()
+def insert_point():
+    var = input.get()
+    return var
 
 
-        var = StringVar() #initialize a string var, for rolling presenting results
+def randomResult(list, num):
+    global is_run
+    result = random.sample(list, num)
+    var.set(result)
+    if is_run:
+        window.after(100, randomResult,list, num)
 
-        noteLabel = Label(testvariable = var)
-        noteLabel.place(anchor=NW, x = 120, y = 120)
-        input = Entry(window,show=None) #input frame
-        input.place(anchor=NW,x = 240,y = 30)
+def finalResult():
+    global is_run
+    is_run = False
 
-        resultLabel = Label(textvariable=var)
-        resultLabel.place(anchor=NW,x=150,y=100)
 
-        startBt = Button(text="start", command=lambda:randomRun(list=list)) #start
-        confirmBt = Button(text="confirm", command=lambda:finalResult()) #pause
-        startBt.place(anchor=NW, x = 200, y = 180)
-        confirmBt.place(anchor=NW, x=260,y=180)
+if __name__ == '__main__':
+    window = Tk()
+    window.geometry('500x290+250+150')
+    window.resizable(0, 0)
+    window.title('陈琳问卷调查抽奖0829')
+    list = getPeopleList()
 
-        window.mainloop()
+
+    var = StringVar() #initialize a string var, for rolling presenting results
+
+    noteLabel = Label(text = "输入抽奖uids数量")
+    noteLabel.place(anchor=NW, x = 120, y = 120)
+    input = Entry(window,show=None) #input frame
+    input.place(anchor=NW,x = 240,y = 30)
+
+    resultLabel = Label(textvariable=var)
+    resultLabel.place(anchor=NW,x=150,y=100)
+
+    startBt = Button(text="start", command=lambda:randomRun(list=list)) #start
+    confirmBt = Button(text="confirm", command=lambda:finalResult()) #pause
+    startBt.place(anchor=NW, x = 200, y = 180)
+    confirmBt.place(anchor=NW, x=260,y=180)
+
+    window.mainloop()
 
 
 
